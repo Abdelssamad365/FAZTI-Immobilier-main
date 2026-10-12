@@ -155,41 +155,73 @@ function ListingsPage() {
 
   return (
     <main className="mx-auto w-full max-w-[1440px] flex-1 px-4 py-4 sm:px-6 sm:py-5 xl:px-8">
-      <div className="mb-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 sm:flex sm:flex-wrap">
-        <div role="tablist" className="inline-flex h-10 w-full items-center rounded-xl border border-border/80 bg-card p-0.5 shadow-sm sm:w-auto">
+      <div className="mb-5 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 sm:flex sm:flex-wrap">
+        {/* Sale / Rent tabs */}
+        <div role="tablist" className="inline-flex h-11 w-full items-center rounded-2xl border border-border/60 bg-card p-1 shadow-[0_1px_3px_0_oklch(0.18_0.03_255/6%),0_4px_12px_-4px_oklch(0.22_0.055_168/10%)] sm:w-auto">
           {([["sale", "Acheter", "شراء"], ["rent", "Louer", "كراء"]] as const).map(([v, fr, ar]) => (
             <button key={v} role="tab" aria-selected={mode === v} onClick={() => { setMode(v); set({ extra: {} }); }}
-              className={`h-9 flex-1 rounded-lg px-3 text-sm font-extrabold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:flex-none sm:px-5 ${mode === v ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:bg-secondary hover:text-foreground"}`}>{tx(fr, ar)}</button>
+              className={`h-9 flex-1 rounded-xl px-3 text-sm font-extrabold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:flex-none sm:px-6 ${
+                mode === v
+                  ? "bg-gradient-to-br from-primary/95 to-primary text-white shadow-[0_2px_8px_oklch(0.42_0.14_168/30%)]"
+                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+              }`}>{tx(fr, ar)}</button>
           ))}
         </div>
-        <Button variant="outline" className="h-10 px-3 lg:hidden" onClick={() => setShowFilters((v) => !v)}><SlidersHorizontal />{tx("Filtres", "تصفية")}</Button>
+
+        {/* Mobile filter button */}
+        <Button variant="outline" className="h-11 rounded-xl border-border/60 px-3.5 shadow-sm lg:hidden" onClick={() => setShowFilters((v) => !v)}>
+          <SlidersHorizontal className="h-4 w-4" />{tx("Filtres", "تصفية")}
+        </Button>
+
+        {/* Sort + view toggle */}
         <div className="col-span-2 flex min-w-0 items-center gap-2 sm:col-span-1 sm:ms-auto">
           <Select value={sort} onValueChange={(value) => setSort(value as typeof sort)}>
-            <SelectTrigger className="h-10 min-w-0 flex-1 rounded-xl border-border bg-card px-3 text-sm font-semibold sm:w-40 sm:flex-none"><SelectValue aria-label={tx("Trier", "ترتيب")} /></SelectTrigger>
+            <SelectTrigger className="h-11 min-w-0 flex-1 rounded-xl border-border/60 bg-card px-3.5 text-sm font-semibold shadow-sm sm:w-44 sm:flex-none">
+              <SelectValue aria-label={tx("Trier", "ترتيب")} />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="recent">{tx("Plus récent", "الأحدث")}</SelectItem>
               <SelectItem value="asc">{tx("Prix ↑", "السعر ↑")}</SelectItem>
               <SelectItem value="desc">{tx("Prix ↓", "السعر ↓")}</SelectItem>
             </SelectContent>
           </Select>
-          <div className="inline-flex h-10 items-center rounded-xl border border-border/80 bg-card p-0.5 shadow-sm">
-            <button onClick={() => setView("list")} aria-label={tx("Liste", "القائمة")} aria-pressed={view === "list"} className={`grid h-9 w-9 place-items-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${view === "list" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}><List className="h-4 w-4" /></button>
-            <button onClick={() => setView("map")} aria-label={tx("Carte", "الخريطة")} aria-pressed={view === "map"} className={`grid h-9 w-9 place-items-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${view === "map" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}><MapIcon className="h-4 w-4" /></button>
+
+          <div className="inline-flex h-11 items-center rounded-2xl border border-border/60 bg-card p-1 shadow-sm">
+            <button onClick={() => setView("list")} aria-label={tx("Liste", "القائمة")} aria-pressed={view === "list"}
+              className={`grid h-9 w-9 place-items-center rounded-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${view === "list" ? "bg-gradient-to-br from-primary/95 to-primary text-white shadow-[0_2px_6px_oklch(0.42_0.14_168/25%)]" : "text-muted-foreground hover:text-foreground"}`}>
+              <List className="h-4 w-4" />
+            </button>
+            <button onClick={() => setView("map")} aria-label={tx("Carte", "الخريطة")} aria-pressed={view === "map"}
+              className={`grid h-9 w-9 place-items-center rounded-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${view === "map" ? "bg-gradient-to-br from-primary/95 to-primary text-white shadow-[0_2px_6px_oklch(0.42_0.14_168/25%)]" : "text-muted-foreground hover:text-foreground"}`}>
+              <MapIcon className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </div>
 
       <div className="grid gap-5 lg:grid-cols-[280px_minmax(0,1fr)] 2xl:grid-cols-[300px_minmax(0,1fr)]">
-        <aside className={`${showFilters ? "block" : "hidden"} rounded-2xl border border-border/80 bg-card p-4 shadow-sm lg:sticky lg:top-[4.75rem] lg:block lg:max-h-[calc(100vh-5.75rem)] lg:overflow-y-auto`}>
-          <div className="mb-4 flex items-center justify-between border-b border-border pb-3">
+        <aside className={`${showFilters ? "block" : "hidden"} rounded-2xl border border-border/60 bg-card/90 p-5 shadow-[0_1px_3px_0_oklch(0.18_0.03_255/6%),0_8px_24px_-8px_oklch(0.22_0.055_168/12%)] backdrop-blur-sm lg:sticky lg:top-[4.75rem] lg:block lg:max-h-[calc(100vh-5.75rem)] lg:overflow-y-auto`}>
+          <div className="mb-5 flex items-center justify-between border-b border-border/60 pb-4">
             <div className="flex items-center gap-2.5">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary/10 text-primary"><SlidersHorizontal className="h-4 w-4" /></span>
+              <span className="grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 text-primary ring-1 ring-primary/15">
+                <SlidersHorizontal className="h-4 w-4" />
+              </span>
               <h2 className="text-sm font-extrabold text-foreground">{tx("Filtres", "التصفية")}</h2>
-              {chips.length > 0 && <span className="grid h-5 min-w-5 place-items-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">{chips.length}</span>}
+              {chips.length > 0 && (
+                <span className="grid h-5 min-w-5 place-items-center rounded-full bg-gradient-to-br from-primary to-primary/80 px-1 text-[10px] font-bold text-white shadow-sm">
+                  {chips.length}
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-2">
-              {chips.length > 0 && <button type="button" onClick={reset} className="text-xs font-bold text-primary hover:underline">{tx("Effacer", "مسح")}</button>}
-              <button type="button" onClick={() => setShowFilters(false)} aria-label={tx("Fermer les filtres", "إغلاق الفلاتر")} className="grid h-8 w-8 place-items-center rounded-lg text-muted-foreground hover:bg-secondary lg:hidden"><X className="h-4 w-4" /></button>
+              {chips.length > 0 && (
+                <button type="button" onClick={reset} className="text-xs font-bold text-primary transition-colors hover:text-primary/70 hover:underline">
+                  {tx("Effacer", "مسح")}
+                </button>
+              )}
+              <button type="button" onClick={() => setShowFilters(false)} aria-label={tx("Fermer les filtres", "إغلاق الفلاتر")} className="grid h-8 w-8 place-items-center rounded-xl text-muted-foreground transition-colors hover:bg-secondary lg:hidden">
+                <X className="h-4 w-4" />
+              </button>
             </div>
           </div>
           {filtersPanel}

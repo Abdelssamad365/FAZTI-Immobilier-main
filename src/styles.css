@@ -6,17 +6,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system definition.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ * Design system — Premium Modern Light
+ * All colors use oklch format.
  */
 
 @theme inline {
@@ -25,8 +16,8 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+  --radius-3xl: calc(var(--radius) + 14px);
+  --radius-4xl: calc(var(--radius) + 20px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -55,6 +46,8 @@
   --color-portal-glow: var(--portal-glow);
   --font-sans: var(--font-sans);
   --shadow-float: var(--shadow-float);
+  --shadow-card: var(--shadow-card);
+  --shadow-lifted: var(--shadow-lifted);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -71,54 +64,91 @@
 }
 
 :root {
-  --radius: 0.75rem;
-  --background: oklch(0.975 0.012 82);
-  --foreground: oklch(0.27 0.025 250);
+  --radius: 0.875rem;
+
+  /* Crisp white base */
+  --background: oklch(0.98 0.006 250);
+  --foreground: oklch(0.18 0.03 255);
+
+  /* Pure card whites */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.27 0.025 250);
+  --card-foreground: oklch(0.18 0.03 255);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.27 0.025 250);
-  --primary: oklch(0.39 0.075 169);
+  --popover-foreground: oklch(0.18 0.03 255);
+
+  /* Vivid teal-green primary */
+  --primary: oklch(0.42 0.14 168);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.95 0.018 82);
-  --secondary-foreground: oklch(0.32 0.035 250);
-  --muted: oklch(0.95 0.018 82);
-  --muted-foreground: oklch(0.52 0.025 250);
+
+  /* Soft neutral secondary */
+  --secondary: oklch(0.96 0.008 240);
+  --secondary-foreground: oklch(0.28 0.03 255);
+
+  --muted: oklch(0.95 0.007 240);
+  --muted-foreground: oklch(0.52 0.02 255);
+
+  /* WhatsApp green */
   --whatsapp: oklch(0.62 0.17 150);
   --whatsapp-foreground: oklch(1 0 0);
-  --accent: oklch(0.78 0.12 76);
-  --accent-foreground: oklch(0.28 0.04 55);
+
+  /* Warm gold accent */
+  --accent: oklch(0.82 0.13 72);
+  --accent-foreground: oklch(0.25 0.05 50);
+
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.88 0.018 78);
-  --input: oklch(0.86 0.025 78);
-  --ring: oklch(0.66 0.09 169);
-  --deep: oklch(0.27 0.045 169);
+
+  /* Refined borders */
+  --border: oklch(0.9 0.01 240);
+  --input: oklch(0.92 0.01 240);
+  --ring: oklch(0.6 0.12 168);
+
+  /* Dark deep for map/markers */
+  --deep: oklch(0.22 0.055 168);
   --deep-foreground: oklch(1 0 0);
-  --portal-grid: oklch(0.78 0.12 76 / 12%);
-  --portal-glow: oklch(0.78 0.12 76 / 32%);
-  --gradient-brand: radial-gradient(ellipse at 50% 0%, oklch(0.78 0.12 76) 0%, oklch(0.48 0.09 160) 38%, oklch(0.32 0.07 169) 72%, oklch(0.22 0.045 250) 100%);
-  --shadow-float: 0 18px 44px -18px oklch(0.27 0.045 169 / 26%);
+
+  --portal-grid: oklch(0.82 0.13 72 / 10%);
+  --portal-glow: oklch(0.82 0.13 72 / 28%);
+
+  /* Hero gradient: teal → emerald → midnight navy */
+  --gradient-brand: linear-gradient(135deg,
+    oklch(0.88 0.09 168) 0%,
+    oklch(0.58 0.14 168) 35%,
+    oklch(0.36 0.10 200) 70%,
+    oklch(0.22 0.045 240) 100%);
+
+  /* Layered premium shadows */
+  --shadow-float: 0 4px 6px -1px oklch(0.18 0.03 255 / 8%), 0 20px 48px -16px oklch(0.22 0.055 168 / 22%);
+  --shadow-card:  0 1px 3px 0 oklch(0.18 0.03 255 / 6%), 0 8px 24px -8px oklch(0.22 0.055 168 / 12%);
+  --shadow-lifted: 0 2px 8px -2px oklch(0.18 0.03 255 / 10%), 0 24px 56px -16px oklch(0.22 0.055 168 / 28%);
+
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-ar: "Cairo", ui-sans-serif, system-ui, sans-serif;
-  --chart-1: oklch(0.78 0.12 76);
-  --chart-2: oklch(0.39 0.075 169);
-  --chart-3: oklch(0.42 0.08 34);
-  --chart-4: oklch(0.66 0.09 169);
-  --chart-5: oklch(0.89 0.045 82);
+
+  --chart-1: oklch(0.82 0.13 72);
+  --chart-2: oklch(0.42 0.14 168);
+  --chart-3: oklch(0.52 0.12 34);
+  --chart-4: oklch(0.65 0.10 168);
+  --chart-5: oklch(0.88 0.05 82);
+
   --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.27 0.025 250);
-  --sidebar-primary: oklch(0.39 0.075 169);
+  --sidebar-foreground: oklch(0.18 0.03 255);
+  --sidebar-primary: oklch(0.42 0.14 168);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.95 0.018 82);
-  --sidebar-accent-foreground: oklch(0.27 0.025 250);
-  --sidebar-border: oklch(0.88 0.018 78);
-  --sidebar-ring: oklch(0.66 0.09 169);
+  --sidebar-accent: oklch(0.96 0.008 240);
+  --sidebar-accent-foreground: oklch(0.18 0.03 255);
+  --sidebar-border: oklch(0.9 0.01 240);
+  --sidebar-ring: oklch(0.6 0.12 168);
 }
 
 @layer base {
   * {
     border-color: var(--color-border);
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -126,13 +156,35 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
   [dir="rtl"] body, [dir="rtl"] { font-family: var(--font-ar); }
-  ::selection { background: oklch(0.78 0.12 76 / 55%); color: var(--color-foreground); }
+
+  /* Premium text selection */
+  ::selection {
+    background: oklch(0.42 0.14 168 / 20%);
+    color: var(--color-foreground);
+  }
+
+  /* Smooth custom scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(0.75 0.04 240);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.55 0.08 168);
+  }
+
+  button, a { -webkit-tap-highlight-color: transparent; }
 }
 
+/* ── Brand gradient background ── */
 @utility bg-brand { background: var(--gradient-brand); }
 
+/* ── Animated portal grid (hero BG) ── */
 @utility portal-grid {
   background-image:
     radial-gradient(circle at center, transparent 0%, var(--deep) 72%),
@@ -145,28 +197,72 @@
 
 @keyframes portal-drift {
   from { background-position: center, center, 0 0, 0 0; }
-  to { background-position: center, center, 54px 54px, 54px 54px; }
+  to   { background-position: center, center, 54px 54px, 54px 54px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .portal-grid { animation: none; }
 }
 
-.price-marker {
-  background: var(--deep); color: var(--deep-foreground);
-  padding: 4px 8px; border-radius: 6px; font-weight: 700; font-size: 12px;
-  white-space: nowrap; box-shadow: var(--shadow-float); border: 2px solid white;
-  transform: translate(-50%, -100%); position: absolute; transition: all .15s;
+/* ── Shimmer loading utility ── */
+@utility shimmer {
+  background: linear-gradient(90deg,
+    oklch(0.94 0.005 240) 0%,
+    oklch(0.98 0.005 240) 50%,
+    oklch(0.94 0.005 240) 100%);
+  background-size: 200% 100%;
+  animation: shimmer-slide 1.6s ease-in-out infinite;
 }
-.price-marker.active, .price-marker:hover { background: var(--accent); color: var(--accent-foreground); transform: translate(-50%, -100%) scale(1.1); z-index: 1000; }
+@keyframes shimmer-slide {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* ── Glassmorphism card utility ── */
+@utility glass-card {
+  background: oklch(1 0 0 / 80%);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid oklch(0.9 0.01 240 / 60%);
+  box-shadow: var(--shadow-card);
+}
+
+/* ── Map markers ── */
+.price-marker {
+  background: var(--deep);
+  color: var(--deep-foreground);
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 11px;
+  white-space: nowrap;
+  box-shadow: var(--shadow-float);
+  border: 2px solid oklch(1 0 0 / 90%);
+  transform: translate(-50%, -100%);
+  position: absolute;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  letter-spacing: 0.02em;
+}
+.price-marker.active, .price-marker:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  transform: translate(-50%, -100%) scale(1.12);
+  z-index: 1000;
+  box-shadow: var(--shadow-lifted);
+}
 .cluster-marker {
-  background: var(--primary); color: white; width: 40px; height: 40px; border-radius: 999px;
-  display: grid; place-items: center; font-weight: 700; border: 3px solid var(--accent);
-  transform: translate(-50%, -50%); position: absolute;
+  background: var(--primary);
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 13px;
+  border: 3px solid oklch(0.82 0.13 72);
+  transform: translate(-50%, -50%);
+  position: absolute;
+  box-shadow: 0 4px 16px oklch(0.22 0.055 168 / 30%);
 }
 .leaflet-div-icon { background: transparent !important; border: none !important; }
-.price-marker { border-radius: 999px; }
-.price-marker.active, .price-marker:hover { background: var(--primary); color: var(--primary-foreground); }
-@layer base {
-  button, a { -webkit-tap-highlight-color: transparent; }
-}

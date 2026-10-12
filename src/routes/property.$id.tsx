@@ -85,40 +85,48 @@ function PropertyPage() {
             </div>
           </section>
 
-          <section className="rounded-xl border border-border/80 bg-card p-4">
+          <section className="rounded-2xl border border-border/60 bg-card p-5 shadow-[0_1px_3px_0_oklch(0.18_0.03_255/6%),0_8px_24px_-8px_oklch(0.22_0.055_168/10%)]">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <div className="text-2xl font-extrabold text-foreground">{listingPrice(p.price, p.listing_type === "rent", lang)}</div>
-                {p.listing_type === "sale" && <p className="mt-0.5 text-sm font-medium text-muted-foreground">{tx("Soit", "يعادل")} {formatDZD(p.price, lang)}</p>}
-                <h1 className="text-lg font-bold text-primary">{p.title[lang]}</h1>
-                <p className="mt-1 flex items-center gap-1 text-sm text-muted-foreground"><MapPin className="h-4 w-4" />{communeLabel(p.wilaya, p.commune, lang)}, {wilayaBy(p.wilaya)?.[lang]} · {relativeDate(p.createdAt, lang)}</p>
+                <div className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-2xl font-extrabold text-transparent">
+                  {listingPrice(p.price, p.listing_type === "rent", lang)}
+                </div>
+                {p.listing_type === "sale" && (
+                  <p className="mt-0.5 text-sm font-medium text-muted-foreground">{tx("Soit", "يعادل")} {formatDZD(p.price, lang)}</p>
+                )}
+                <h1 className="mt-1 text-lg font-bold text-foreground">{p.title[lang]}</h1>
+                <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
+                  <MapPin className="h-4 w-4 text-amber-500" />
+                  {communeLabel(p.wilaya, p.commune, lang)}, {wilayaBy(p.wilaya)?.[lang]} · {relativeDate(p.createdAt, lang)}
+                </p>
               </div>
-              <Button variant="outline" size="icon" className="h-11 w-11 shrink-0" onClick={() => toggleFavorite(p.id)} aria-pressed={fav} aria-label={tx("Favori", "المفضلة")}>
+              <Button variant="outline" size="icon" className="h-11 w-11 shrink-0 rounded-xl border-border/60 shadow-sm" onClick={() => toggleFavorite(p.id)} aria-pressed={fav} aria-label={tx("Favori", "المفضلة")}>
                 <Heart className={fav ? "fill-current text-destructive" : ""} />
               </Button>
             </div>
-            <h2 className="mt-4 font-extrabold text-foreground">{tx("Description", "الوصف")}</h2>
-            <p className="mt-1 whitespace-pre-line text-sm text-primary">{p.description[lang]}</p>
+            <h2 className="mt-5 font-extrabold text-foreground">{tx("Description", "الوصف")}</h2>
+            <p className="mt-1.5 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">{p.description[lang]}</p>
           </section>
 
           {p.videos.length > 0 && (
-            <section className="space-y-2 rounded-xl border border-border/80 bg-card p-4">
+            <section className="space-y-2 rounded-2xl border border-border/60 bg-card p-5 shadow-[0_1px_3px_0_oklch(0.18_0.03_255/6%),0_8px_24px_-8px_oklch(0.22_0.055_168/10%)]">
               <h2 className="font-extrabold text-foreground">{tx("Vidéo", "فيديو")}</h2>
               {p.videos.map((url) => {
                 const v = videoSource(url);
                 return v.kind === "youtube"
-                  ? <iframe key={url} src={v.src} title={tx("Vidéo du bien", "فيديو العقار")} className="aspect-video w-full rounded" allowFullScreen />
-                  : <video key={url} src={v.src} controls className="aspect-video w-full rounded bg-foreground" />;
+                  ? <iframe key={url} src={v.src} title={tx("Vidéo du bien", "فيديو العقار")} className="aspect-video w-full rounded-xl" allowFullScreen />
+                  : <video key={url} src={v.src} controls className="aspect-video w-full rounded-xl bg-foreground" />;
               })}
             </section>
           )}
 
-          <section className="rounded-xl border border-border/80 bg-card p-4">
-            <h2 className="mb-3 font-extrabold text-foreground">{tx("Détails", "التفاصيل")}</h2>
-            <dl className="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
+          <section className="rounded-2xl border border-border/60 bg-card p-5 shadow-[0_1px_3px_0_oklch(0.18_0.03_255/6%),0_8px_24px_-8px_oklch(0.22_0.055_168/10%)]">
+            <h2 className="mb-4 font-extrabold text-foreground">{tx("Détails", "التفاصيل")}</h2>
+            <dl className="grid grid-cols-1 gap-x-6 gap-y-0 sm:grid-cols-2">
               {details.map((d) => (
-                <div key={d.k} className="flex justify-between gap-3 border-b border-border py-1.5 text-sm">
-                  <dt className="text-muted-foreground">{d.k}</dt><dd className="text-end font-semibold text-foreground">{d.v}</dd>
+                <div key={d.k} className="flex justify-between gap-3 border-b border-border/50 py-2.5 text-sm last:border-0">
+                  <dt className="text-muted-foreground">{d.k}</dt>
+                  <dd className="text-end font-semibold text-foreground">{d.v}</dd>
                 </div>
               ))}
             </dl>
@@ -130,18 +138,21 @@ function PropertyPage() {
         </div>
 
         <aside className="lg:sticky lg:top-[4.5rem] lg:self-start">
-          <div className="space-y-3 rounded-xl border border-border/80 bg-card p-4 shadow-sm">
-            <div className="text-xs font-bold uppercase text-muted-foreground">{tx("Agence", "وكالة")}</div>
+          <div className="space-y-3 rounded-2xl border border-border/60 bg-card p-5 shadow-[0_2px_8px_-2px_oklch(0.18_0.03_255/10%),0_24px_56px_-16px_oklch(0.22_0.055_168/18%)]">
+            <div className="text-[11px] font-extrabold uppercase tracking-widest text-muted-foreground">{tx("Agence", "وكالة")}</div>
             {p.publisher.slug
-              ? <Link to="/agence/$slug" params={{ slug: p.publisher.slug }} className="block text-lg font-extrabold text-foreground underline-offset-2 hover:underline">{p.publisher.name}</Link>
+              ? <a href={`/agence/${p.publisher.slug}`} className="block text-lg font-extrabold text-foreground underline-offset-2 hover:text-primary hover:underline transition-colors">{p.publisher.name}</a>
               : <div className="text-lg font-extrabold text-foreground">{p.publisher.name}</div>}
+            <div className="my-1 border-t border-border/50" />
             {showPhone
-              ? <Button asChild variant="outline" className="w-full"><a href={`tel:${p.publisher.phone}`}><Phone />{p.publisher.phone}</a></Button>
-              : <Button variant="outline" className="w-full" onClick={() => setShowPhone(true)}><Phone />{tx("Afficher le numéro", "إظهار الرقم")}</Button>}
-            <Button asChild className="w-full bg-whatsapp text-whatsapp-foreground hover:bg-whatsapp/90">
+              ? <Button asChild variant="outline" className="w-full rounded-xl border-border/60 shadow-sm"><a href={`tel:${p.publisher.phone}`}><Phone />{p.publisher.phone}</a></Button>
+              : <Button variant="outline" className="w-full rounded-xl border-border/60 shadow-sm" onClick={() => setShowPhone(true)}><Phone />{tx("Afficher le numéro", "إظهار الرقم")}</Button>}
+            <Button asChild className="w-full rounded-xl bg-whatsapp text-whatsapp-foreground shadow-sm hover:bg-whatsapp/90">
               <a href={waLink(p.publisher.whatsapp ?? p.publisher.phone, p.title[lang], p.id, lang)} target="_blank" rel="noreferrer"><MessageCircle />WhatsApp</a>
             </Button>
-            <Button className="w-full" onClick={() => setBooking(true)}><CalendarDays />{tx("Réserver une visite", "حجز زيارة")}</Button>
+            <Button className="w-full rounded-xl bg-gradient-to-br from-primary/95 to-primary shadow-[0_2px_8px_oklch(0.42_0.14_168/30%)] hover:shadow-[0_4px_16px_oklch(0.42_0.14_168/35%)] hover:from-primary hover:to-primary/90 transition-all" onClick={() => setBooking(true)}>
+              <CalendarDays />{tx("Réserver une visite", "حجز زيارة")}
+            </Button>
           </div>
         </aside>
       </div>
