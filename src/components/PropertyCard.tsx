@@ -127,9 +127,9 @@ export function PropertyCard({ p, active, onHover }: { p: Listing; active?: bool
           <Heart className={`h-4 w-4 transition-all ${fav ? "fill-current" : ""}`} />
         </button>
 
-        {/* 360° badge */}
+        {/* 360° badge (hidden) */}
         {p.has360 && (
-          <span className="pointer-events-none absolute start-3 bottom-12 flex items-center gap-1 rounded-full bg-primary/90 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
+          <span className="hidden pointer-events-none absolute start-3 bottom-12 items-center gap-1 rounded-full bg-primary/90 px-2.5 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
             <Sparkles className="h-3 w-3" />360°
           </span>
         )}

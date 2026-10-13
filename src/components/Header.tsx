@@ -25,8 +25,8 @@ export function Header() {
           </span>
         </Link>
 
-        {/* Desktop nav */}
-        <nav aria-label={tx("Navigation principale", "التنقل الرئيسي")} className="ms-8 hidden items-center gap-1 lg:flex">
+        {/* Desktop nav (hidden while preserving logic) */}
+        <nav aria-label={tx("Navigation principale", "التنقل الرئيسي")} className="hidden items-center gap-1">
           <Link
             to="/search"
             activeOptions={{ exact: false }}
